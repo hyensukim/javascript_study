@@ -41,6 +41,8 @@ console.log(arr3);
 // 숫자는 대소비교가 필요하기 때문!
 // 이를 위해서는 대소 비교를 위한 콜백함수를 사용해줘야 한다.
 let arr4 = [10, 3, 5];
+arr4.sort();
+console.log(arr4);
 // 오름차순 정렬
 arr4.sort((a, b) => {
   if (a > b) {
@@ -81,3 +83,7 @@ console.log(sorted);
 let arr6 = ["hi", "im", "windterlood"];
 const joined = arr6.join("~");
 console.log(joined);
+
+let arr99 = [2, 3, 1, 4, 6, 5];
+arr99.sort();
+console.log(arr99);
