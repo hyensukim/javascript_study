@@ -33,4 +33,44 @@ async function printData() {
   const data = await getNewData(); // 비동기 함수가 처리될 때까지 기다림.
   console.log(data);
 }
-printData();
+// printData();
+
+const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
+const customerKey = "ihCbPOLuHP5b0sqP4RKaG"; // 내 상점에서 고객을 구분하기 위해 발급한 고객의 고유 ID
+// ------  결제위젯 초기화 ------
+const paymentWidget = {
+  renderPaymentMethods(message, money, key) {
+    console.log(message, money, key);
+  },
+  renderAgreement(str) {
+    console.log(str);
+  },
+  requestPayment(...rest) {
+    return Promise.resolve(rest);
+  },
+}; // 회원 결제
+
+// ------  결제위젯 렌더링 ------
+const paymentMethodWidget = paymentWidget.renderPaymentMethods(
+  "#payment-method",
+  { value: 15000 },
+  { variantKey: "DEFAULT" } // 렌더링하고 싶은 결제 UI의 variantKey
+);
+// ------  이용약관 렌더링 ------
+paymentWidget.renderAgreement("#agreement");
+
+// ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
+async function handleSubmit() {
+  try {
+    const paymentData = await paymentWidget.requestPayment({
+      orderId: "KOISABLdLiIzeM-VGU_8Z", // 주문 ID(직접 만들어주세요)
+      orderName: "토스 티셔츠 외 2건", // 주문명
+    });
+    console.log(paymentData);
+    return paymentData;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+handleSubmit();
